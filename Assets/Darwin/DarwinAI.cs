@@ -8,22 +8,26 @@ public class DarwinAI : MonoBehaviour
     private DarwinTraits traits;
     private TriggerArea triggerArea;
     public GameObject thing;
+    private float timeStamp = 0.0f;
 
-    // Start is called before the first frame update
     void Start()
     {
         rigidBody = gameObject.GetComponent<Rigidbody2D>();
         traits = gameObject.GetComponent<DarwinTraits>();
-        triggerArea = gameObject.GetComponent<TriggerArea>();
-        //charge(Random.Range(0.0f, 360.0f), 200.0f);
-        //charge(0.0f, 200.0f);
-        //GameObject thing = getClosestObject(triggerArea.darwinsInArea, triggerArea.cookiesInArea);
-        charge(getAngle(thing), 200.0f);
+        triggerArea = gameObject.GetComponentInChildren<TriggerArea>();
     }
 
-    // Update is called once per frame
     void Update()
     {
+        if(timeStamp <= Time.time)
+        {
+            thing = getClosestObject(triggerArea.darwinsInArea, triggerArea.cookiesInArea);
+            if (thing == null)
+                charge(Random.Range(0.0f, 360.0f), 200.0f);
+            else
+                charge(getAngle(thing), 200.0f);
+            timeStamp = Time.time + 5.0f;
+        }
     }
 
     void charge(float angle, float strength)
@@ -54,9 +58,7 @@ public class DarwinAI : MonoBehaviour
                 dist = Vector3.Distance(darwins[i].transform.position, transform.position);
             }
         }
-        if (closestObject != null)
-            return closestObject;
-        else
+        if (closestObject == null)
         {
             dist = float.MaxValue;
             foreach (GameObject potentialTarget in cookies)
