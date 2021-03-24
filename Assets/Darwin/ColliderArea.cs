@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class ColliderArea : MonoBehaviour
 {
-    public GameObject darwin;
+    public GameObject darwin; //Used to create clone
 
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.CompareTag("Cookie"))
         {
-            Debug.Log("Darwin");
+            Debug.Log("Ate a Cookie!");
             Destroy(other.gameObject);
         }
     }

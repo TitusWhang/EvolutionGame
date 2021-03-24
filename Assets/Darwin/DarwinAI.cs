@@ -5,7 +5,7 @@ using UnityEngine;
 public class DarwinAI : MonoBehaviour
 {
     private Rigidbody2D rigidBody;
-    private DarwinTraits traits;
+    public DarwinTraits traits;
     private TriggerArea triggerArea;
     public GameObject thing;
     private float timeStamp = 0.0f;
@@ -13,7 +13,7 @@ public class DarwinAI : MonoBehaviour
     void Start()
     {
         rigidBody = gameObject.GetComponent<Rigidbody2D>();
-        traits = gameObject.GetComponent<DarwinTraits>();
+        traits = new DarwinTraits(0.2f, 2.0f, 5.0f, 200.0f, 22.5f, 100, 125);
         triggerArea = gameObject.GetComponentInChildren<TriggerArea>();
     }
 
@@ -23,10 +23,10 @@ public class DarwinAI : MonoBehaviour
         {
             thing = getClosestObject(triggerArea.darwinsInArea, triggerArea.cookiesInArea);
             if (thing == null)
-                charge(Random.Range(0.0f, 360.0f), 200.0f);
+                charge(Random.Range(0.0f, 360.0f) + Random.Range(-traits.getDeltaDeviationAngle(), traits.getDeltaDeviationAngle()), traits.getChargeStrength());
             else
-                charge(getAngle(thing), 200.0f);
-            timeStamp = Time.time + 5.0f;
+                charge(getAngle(thing) + Random.Range(-traits.getDeltaDeviationAngle(), traits.getDeltaDeviationAngle()), traits.getChargeStrength());
+            timeStamp = Time.time + traits.getChargeCoolDown();
         }
     }
 
@@ -47,18 +47,10 @@ public class DarwinAI : MonoBehaviour
 
     GameObject getClosestObject(List<GameObject> darwins, List<GameObject> cookies)
     {
-        float dist = float.MaxValue;
+        float dist = 10.0f;
         GameObject closestObject = null;
 
-        for (int i=1;i<darwins.Count;i++)
-        {
-            if (Vector3.Distance(darwins[i].transform.position, transform.position) < dist)
-            {
-                closestObject = darwins[i];
-                dist = Vector3.Distance(darwins[i].transform.position, transform.position);
-            }
-        }
-        if (closestObject == null)
+        if(darwins.Count == 1)
         {
             dist = float.MaxValue;
             foreach (GameObject potentialTarget in cookies)
@@ -67,6 +59,17 @@ public class DarwinAI : MonoBehaviour
                 {
                     closestObject = potentialTarget;
                     dist = Vector3.Distance(potentialTarget.transform.position, transform.position);
+                }
+            }
+        }
+        else
+        {
+            for (int i = 1; i < darwins.Count; i++)
+            {
+                if (Vector3.Distance(darwins[i].transform.position, transform.position) < dist)
+                {
+                    closestObject = darwins[i];
+                    dist = Vector3.Distance(darwins[i].transform.position, transform.position);
                 }
             }
         }

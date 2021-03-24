@@ -99,7 +99,6 @@ GameObject:
   - component: {fileID: 440880298968602745}
   - component: {fileID: 440880298968602742}
   - component: {fileID: 440880298968602743}
-  - component: {fileID: 440880298968602740}
   - component: {fileID: 440880298968602739}
   m_Layer: 0
   m_Name: DarwinPlaceHolder
@@ -223,20 +222,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   thing: {fileID: 0}
---- !u!114 &440880298968602740
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 440880298968602736}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2b3e91dd5ff208b47be7f174994a6991, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  energy: 0
-  breedEnergy: 0
 --- !u!114 &440880298968602739
 MonoBehaviour:
   m_ObjectHideFlags: 0

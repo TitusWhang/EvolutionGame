@@ -9,8 +9,6 @@ public class TriggerArea : MonoBehaviour
     public List<GameObject> cookiesInArea = new List<GameObject>();
     public List<GameObject> darwinsInArea = new List<GameObject>();
 
-    //public GameObject closestObject = null;
-
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.CompareTag("Cookie"))
@@ -44,38 +42,4 @@ public class TriggerArea : MonoBehaviour
             Debug.Log(numDarwins+"Darwin(s)");
         }
     }
-
-    /*public void getClosestObject()
-    {
-        float dist = float.MaxValue;
-        GameObject closestObject = null;
-
-        for (int i = 1; i < darwinsInArea.Count; i++)
-        {
-            if (Vector3.Distance(darwinsInArea[i].transform.position, transform.position) < dist)
-            {
-                closestObject = darwinsInArea[i];
-                dist = Vector3.Distance(darwinsInArea[i].transform.position, transform.position);
-            }
-        }
-        if (closestObject != null)
-        {
-            darwinAi.thing = closestObject;
-            return;
-        }
-        else
-        {
-            dist = float.MaxValue;
-            for (int i = 0; i < cookiesInArea.Count; i++)
-            {
-                if (Vector3.Distance(cookiesInArea[i].transform.position, transform.position) < dist)
-                {
-                    closestObject = cookiesInArea[i];
-                    dist = Vector3.Distance(cookiesInArea[i].transform.position, transform.position);
-                }
-            }
-        }
-        darwinAi.thing = closestObject;
-        return;
-    }*/
 }
